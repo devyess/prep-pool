@@ -7,18 +7,32 @@ export const AuthProvider = ({children}) => {
 
       useEffect(() => {
         const storedUserToken = localStorage.getItem('userAuthToken')
-        if(storedUserToken){
-          setUserAuth(storedUserToken)
-        }
+        const tokenTimestamp = localStorage.getItem('tokenTimestamp')
+        const currentTime = new Date().getTime()
+
+        if(storedUserToken && tokenTimestamp){
+            const timeElapsed = currentTime - tokenTimestamp;
+            const thirtyMinutes = 30 * 60 * 1000;
+
+            if(timeElapsed > thirtyMinutes){
+                  localStorage.removeItem('userAuthToken');
+                  localStorage.removeItem('tokenTimestamp');
+            }else{
+                  setUserAuth(storedUserToken);
+            }
+      }
       },[])
 
       const userLogin = (userToken) => {
         setUserAuth(userToken)
-        localStorage.setItem('userAuthToken',userToken)
+        const currentTime = new Date().getTime();
+        localStorage.setItem('userAuthToken',userToken);
+        localStorage.setItem('tokenTimestamp',currentTime.toString());
       }
       const userLogout = () => {
             setUserAuth(null)
-            localStorage.removeItem('userAuthToken')
+            localStorage.removeItem('userAuthToken');
+            localStorage.removeItem('tokenTimestamp');
       } 
       return(
             <AuthContext.Provider value={{userAuth,userLogin,userLogout}}>

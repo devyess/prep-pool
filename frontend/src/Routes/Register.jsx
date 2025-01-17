@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../config/axios'
 import interview from '../assets/interview.png'
 import '../css/form-container.css'
-import '../css/register-img.css'
+
 const Register = () => {
   const [userName,setUserName] = useState('');
   const [email,setEmail] = useState('');
@@ -17,7 +17,8 @@ const Register = () => {
     e.preventDefault()
     try {
       if(confirmPassword!==password){
-        setError("Confirm Password and password do not match!")
+        setError("Confirm Password and password do not match!");
+        return;
       }
       const response = await axiosInstance.post('/users/register', {
         userName,
@@ -38,11 +39,11 @@ const Register = () => {
       <div className='absolute top-0 right-0 w-1/3 min-h-screen bg-gray-200'></div>
     
       <div 
-      className='form-container absolute right-1/4 top-40 items-center justify-center shadow-lg'>
+      className='absolute right-1/4 top-40 items-center justify-center shadow-lg'>
         <div 
         className='bg-white p-4 rounded-2xl shadow-lg size-fit transition duration-500 ease-in-out transform hover:scale-110'>
             <form 
-            className='m-4 '>
+            className='m-4 pr-4 pl-1'>
               <label 
                 className='block text-sm font-medium text-gray-700 mt-2'>
                   Name*

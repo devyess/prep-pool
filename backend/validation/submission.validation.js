@@ -1,10 +1,10 @@
 const zod= require('zod');
 
 const submissionSchema=zod.object({
-      userName:zod.string().min(3).max(20),
-      country:zod.string().min(3).max(20),
-      company:zod.string().min(3).max(20),
-      question:zod.string().min(10),
+      userName:zod.string().min(2),
+      country:zod.string().min(2),
+      company:zod.string().min(2),
+      question:zod.string(),
 });
 
 module.exports=submissionSchema;

@@ -11,7 +11,7 @@ const userRegister=async(req,res)=>{
             const registerValidatedData=await registerValidation.safeParse(req.body);
             if(!registerValidatedData.success){
                   return res.status(403).json({
-                        message:"Password must be minimum 6 letters long",
+                        message:registerValidatedData.error,
                         error:registerValidatedData.error
                   });
             }

@@ -9,7 +9,7 @@ const Register = () => {
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
   const [error,setError]=useState('');
-  const {userLogin} = useContext(AuthContext)
+  const {userLogin} = useContext(AuthContext);
   const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
@@ -18,11 +18,11 @@ const Register = () => {
       const response = await axiosInstance.post('/users/login', {
         email,
         password
-      })
-      localStorage.setItem('userAuthToken', response.data.token);
+      });
+      userLogin(response.data.token);
       navigate('/home')
     } catch (error) {
-      setError(error.response.data.message)
+      setError("Incorrect password or email");
       console.log(error)
     }
   }
