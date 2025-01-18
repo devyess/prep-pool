@@ -19,26 +19,38 @@ const PostQuestion = () => {
             alertShown.current = true;
             navigate('/login');
             }
-            }, [userAuth, navigate]);
+        }, [userAuth, navigate]);
 
-            const handleSubmit = async (e) => {
-                  e.preventDefault();             
-                  try {
-                    await axios.post('/users/post-question', {userName,company,country,question}, {
-                      headers: {
-                        Authorization: `Bearer ${userAuth}`
-                      }
-                    });
-                    setNotification('Question is now published!');
-                    setTimeout(() => {
-                      navigate('/home');
-                    }, 2000); 
-                  } catch (err) {
-                    console.log(err);
-                  }
-                };
+      const handleSubmit = async (e) => {
+        e.preventDefault();             
+        try {
+          await axios.post('/users/post-question', {userName,company,country,question}, {
+            headers: {
+              Authorization: `Bearer ${userAuth}`
+            }
+          });
+          setNotification('Question is now published!');
+          setTimeout(() => {
+            navigate('/home');
+          }, 2000); 
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      const handleBack = () => {
+        navigate('/home');
+      }
+
       return (
-            <div style={{ backgroundColor: "#79D7BE" }} className='w-full min-h-screen'>
+          <div className='relative bg-gray-300 justify-center items-center'>
+            <button
+            onClick={handleBack}
+            className='absolute top-4 left-4 bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-800'
+            >
+            Back to Home
+            </button>
+            <div className='absolute left-1/3 bg-blue-400 p-3 rounded-2xl shadow-lg top-32'>
             <form className='flex flex-col items-center mt-10 gap-2' onSubmit={handleSubmit}>
               <input
                 type="text"
@@ -84,6 +96,8 @@ const PostQuestion = () => {
               </div>
             )}
           </div>
+          </div>
+            
       )
 }
 

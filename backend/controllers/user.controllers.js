@@ -136,6 +136,27 @@ const getSelfQues=async(req,res)=>{
       }
 }
 
+const getWantedQues=async(req,res)=>{
+      try{
+            const newId=req.params.id;
+            const submission=await submissions.findById(newId);
+            if(!submission){
+                  return res.status(404).json({
+                        message:"Question not found"
+                  });
+            }
+            return res.status(200).json({
+                  message:"Question fetched successfully",
+                  submission
+            });
+      }catch(err){
+            return res.status(500).json({
+                  message:"Internal server error",
+                  error:err
+            });
+      }
+}
+
 const editQues=async(req,res)=>{
       try{  
             const newId=req.params.id;
@@ -195,6 +216,7 @@ module.exports={
       userLogin,
       userLogout,
       postQuestion,
+      getWantedQues,
       getSelfQues,
       editQues,
       getAllQues
